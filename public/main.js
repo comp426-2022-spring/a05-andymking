@@ -31,6 +31,7 @@ const coin = document.getElementById("singlenav")
 const home = document.getElementById("homenav")
             home.addEventListener("click", displayInstructions)
             function displayInstructions() {
+                // Reveal home instructions, hide all other attributes
                 document.getElementById("home").setAttribute("class", "active");
                 document.getElementById("single").setAttribute("class", "hidden");
                 document.getElementById("multi").setAttribute("class", "hidden");
@@ -40,6 +41,11 @@ const home = document.getElementById("homenav")
 const multi = document.getElementById("multinav")
             multi.addEventListener("click", multiMenu)
             function multiMenu() {
+                // First, clear previous results in multi
+                document.getElementById("results").innerHTML = "";
+                document.getElementById("heads").innerHTML = "";
+                document.getElementById("tails").innerHTML = "";
+                // Then, reveal multi, hide all other attributes
                 document.getElementById("home").setAttribute("class", "hidden");
                 document.getElementById("single").setAttribute("class", "hidden");
                 document.getElementById("multi").setAttribute("class", "active");
@@ -47,10 +53,6 @@ const multi = document.getElementById("multinav")
             }
 
 const coins = document.getElementById("coins")
-            // First, clear previous results
-            document.getElementById("results").innerHTML = "";
-            document.getElementById("heads").innerHTML = "";
-            document.getElementById("tails").innerHTML = "";
 			// Add event listener for coins form
 			coins.addEventListener("submit", flipCoins)
 			// Create the submit handler
@@ -91,3 +93,13 @@ const coins = document.getElementById("coins")
 				const response = await fetch(url, options);
 				return response.json()
 			}
+
+const guessNav = document.getElementById("guessnav")
+            guessNav.addEventListener("click", guessMenu)
+            function guessMenu() {
+                // Reveal guess, hide all other attributes
+                document.getElementById("home").setAttribute("class", "hidden");
+                document.getElementById("single").setAttribute("class", "hidden");
+                document.getElementById("multi").setAttribute("class", "hidden");
+                document.getElementById("guess").setAttribute("class", "active");
+            }
