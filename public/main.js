@@ -31,9 +31,63 @@ const coin = document.getElementById("singlenav")
 const home = document.getElementById("homenav")
             home.addEventListener("click", displayInstructions)
             function displayInstructions() {
-                document.getElementById("home").innerHTML = "how to play:<br>press each button to flip one coin, many coins, or guess the result of a coin flip.<br>press home to display instructions.";
                 document.getElementById("home").setAttribute("class", "active");
                 document.getElementById("single").setAttribute("class", "hidden");
                 document.getElementById("multi").setAttribute("class", "hidden");
                 document.getElementById("guess").setAttribute("class", "hidden");
             }
+
+const multi = document.getElementById("multinav")
+            multi.addEventListener("click", multiMenu)
+            function multiMenu() {
+                document.getElementById("home").setAttribute("class", "hidden");
+                document.getElementById("single").setAttribute("class", "hidden");
+                document.getElementById("multi").setAttribute("class", "active");
+                document.getElementById("guess").setAttribute("class", "hidden");
+            }
+
+const coins = document.getElementById("coins")
+            // First, clear previous results
+            document.getElementById("results").innerHTML = "";
+            document.getElementById("heads").innerHTML = "";
+            document.getElementById("tails").innerHTML = "";
+			// Add event listener for coins form
+			coins.addEventListener("submit", flipCoins)
+			// Create the submit handler
+			async function flipCoins(event) {
+				event.preventDefault();
+				
+				const endpoint = "app/flip/coins/"
+				const url = document.baseURI+endpoint
+
+				const formEvent = event.currentTarget
+
+				try {
+					const formData = new FormData(formEvent);
+					const flips = await sendFlips({ url, formData });
+
+					console.log(flips);
+					document.getElementById("heads").innerHTML = "Heads: "+flips.summary.heads;
+					document.getElementById("tails").innerHTML = "Tails: "+flips.summary.tails;
+				} catch (error) {
+					console.log(error);
+				}
+			}
+			// Create a data sender
+			async function sendFlips({ url, formData }) {
+				const plainFormData = Object.fromEntries(formData.entries());
+				const formDataJson = JSON.stringify(plainFormData);
+				console.log(formDataJson);
+
+				const options = {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Accept: "application/json"
+					},
+					body: formDataJson
+				};
+
+				const response = await fetch(url, options);
+				return response.json()
+			}
