@@ -233,19 +233,26 @@ Keep-Alive: timeout=5
 #### Request cURL
 
 ```
-
+curl http://localhost:5000/app/log/access
 ```
 
 #### Response body
 
 ```
-
+{"id":1,"remoteaddr":"192.168.1.1","remoteuser":"exampleUser","time":null,"method":null,"url":null,"protocol":null,"httpversion":null,"secure":null,"status":null,"referer":null,"useragent":null}
 ```
 
 #### Response headers
 
 ```
-
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 1736
+ETag: W/"6c8-5OVpkmlYAQXqyTGlhstSvOvXrI0"
+Date: Tue, 26 Apr 2022 22:01:20 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
 ```
 
 ### /app/log/access/ (GET)

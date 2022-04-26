@@ -155,14 +155,6 @@ app.get('/app/flip/call/:guess(heads|tails)/', (req, res) => {
     res.status(200).json(game)
 })
 
-if (args['log'] == 'true') {
-    // Use morgan for logging to files
-    // Create a write stream to append (flags: 'a') to a file
-    const writeStream = fs.createWriteStream('access.log', { flags: 'a' })
-    // Set up the access logging middleware
-    app.use(morgan('common', { stream: writeStream }))  
-}
-
 app.use(function(req, res) {
     res.setHeader('Content-Type', 'text/plain');
     res.status(404).send('404 Not Found')
