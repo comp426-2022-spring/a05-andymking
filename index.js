@@ -106,6 +106,12 @@ app.use((req, res, next) => {
     next()
 });
 
+// use morgan for logging to files
+// create a write stream to append (flags: 'a') to a file
+const accessLog = fs.createWriteStream('./data/log/access.log', { flags: 'a' })
+// set up the access logging middleware
+app.use(morgan('combined', { stream: accessLog }))
+
 app.get('/app', (req, res) => {
     res.setHeader('Content-Type', 'text/plain');
     res.setHeader('status', 200)
