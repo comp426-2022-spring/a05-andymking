@@ -13,7 +13,7 @@ const coin = document.getElementById("singlenav")
 			function flipCoin() {
                 fetch('http://localhost:5000/app/flip/', {mode: 'cors'})
   				.then(function(response) {
-    			  return response.json();
+    			    return response.json();
   				})
 				.then(function(result) {
 					console.log(result);
@@ -97,9 +97,95 @@ const coins = document.getElementById("coins")
 const guessNav = document.getElementById("guessnav")
             guessNav.addEventListener("click", guessMenu)
             function guessMenu() {
+                // First, clear previous values
+                document.getElementById("guessOut").innerHTML = "";
+                document.getElementById("flip").innerHTML = "";
+                document.getElementById("correctness").innerHTML = "";
                 // Reveal guess, hide all other attributes
                 document.getElementById("home").setAttribute("class", "hidden");
                 document.getElementById("single").setAttribute("class", "hidden");
                 document.getElementById("multi").setAttribute("class", "hidden");
                 document.getElementById("guess").setAttribute("class", "active");
             }
+
+const guessHeads = document.getElementById("guessHeads")
+            guessHeads.addEventListener("click", guessHeadsFunc)
+            async function guessHeadsFunc(event) {
+                // Make heads guess
+                event.preventDefault();
+				
+				const endpoint = "app/flip/call/"
+				const url = document.baseURI+endpoint
+
+                let guess = {guess : "heads"}
+
+				try {
+					const flip = await sendGuess({ url, guess });
+
+					console.log(flip);
+					document.getElementById("guessOut").innerHTML = "Guess: " + flip.call;
+					document.getElementById("flip").innerHTML = "Flip: " + flip.flip;
+					document.getElementById("correctness").innerHTML = "Result: " + flip.result;
+				} catch (error) {
+					console.log(error);
+				}
+            }
+
+            // Create a data sender
+			async function sendGuess({ url, guess }) {
+				const guessJson = JSON.stringify(guess);
+				console.log(guessJson);
+
+				const options = {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Accept: "application/json"
+					},
+					body: guessJson
+				};
+
+				const response = await fetch(url, options);
+				return response.json()
+			}
+
+const guessTails = document.getElementById("guessTails")
+            guessTails.addEventListener("click", guessTailsFunc)
+            async function guessTailsFunc(event) {
+                // Make heads guess
+                event.preventDefault();
+				
+				const endpoint = "app/flip/call/"
+				const url = document.baseURI+endpoint
+
+                let guess = {guess : "tails"}
+
+				try {
+					const flip = await sendGuess({ url, guess });
+
+					console.log(flip);
+                    document.getElementById("guessOut").innerHTML = "Guess: " + flip.call;
+					document.getElementById("flip").innerHTML = "Flip: " + flip.flip;
+					document.getElementById("correctness").innerHTML = "Result: " + flip.result;
+				} catch (error) {
+					console.log(error);
+				}
+            }
+
+            // Create a data sender
+			async function sendGuess({ url, guess }) {
+				const guessJson = JSON.stringify(guess);
+				console.log(guessJson);
+
+				const options = {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Accept: "application/json"
+					},
+					body: guessJson
+				};
+
+				const response = await fetch(url, options);
+				return response.json()
+			}
