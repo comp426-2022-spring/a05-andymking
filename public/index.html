@@ -32,18 +32,32 @@
       <button id="multinav">Flip multiple coins</button>
       <button id="guessnav">Guess the result</button>
     </nav>
-    <div id="home">
-      
+    <div id="home" class="active">
+      "how to play:<br>press each button to flip one coin, many coins, or guess the result of a coin flip.<br>press home to display instructions.";
     </div>    
     <div id="single" class="hidden">
       
     </div>
     <div id="multi" class="hidden">
-      
+      <form id="coins">
+				<label for="number">
+					<strong>How many coins?</strong>
+				</label>
+				<input type="number" name="number" id="number">
+				<input type="submit" value="Flip 'em!">
+        <h2 id="results">Results:</h2>
+        <p id="heads"></p>
+				<p id="tails"></p>
+			</form>
     </div>
     <div id="guess" class="hidden">
-      
+      <h2>Predict the flip!</h2>
+      <button id="guessHeads">heads</button>
+      <button id="guessTails">tails</button>
+      <p id="guessOut"></p>
+      <p id="flip"></p>
+      <p id="correctness"></p>
     </div>
-	<script src="main.js"></script>
+	  <script src="main.js"></script>
   </body>
 </html>
